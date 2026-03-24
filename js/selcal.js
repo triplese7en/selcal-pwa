@@ -42,11 +42,15 @@ const toneElements = [
 const statusMessage = document.getElementById('statusMessage');
 const testBtn = document.getElementById('testBtn');
 const clearBtn = document.getElementById('clearBtn');
+const volumeSlider = document.getElementById('volumeSlider');
+const volumeValue = document.getElementById('volumeValue');
 
 // Initialize
 function init() {
     setupEventListeners();
     updateDisplay();
+    // Set initial volume
+    setVolume(0.5);
 }
 
 // Setup Event Listeners
@@ -62,6 +66,13 @@ function setupEventListeners() {
     // Control buttons
     clearBtn.addEventListener('click', clearSelection);
     testBtn.addEventListener('click', testSelcal);
+
+    // Volume control
+    volumeSlider.addEventListener('input', (e) => {
+        const volume = e.target.value / 100; // Convert 0-100 to 0.0-1.0
+        setVolume(volume);
+        volumeValue.textContent = `${e.target.value}%`;
+    });
 }
 
 // Select a letter for current position

@@ -1,12 +1,19 @@
 // SELCAL Audio Generator using Web Audio API
 
 let audioContext = null;
+let masterGainNode = null;
+let currentVolume = 0.5; // Default 50%
 
 // Initialize Audio Context
 function initAudioContext() {
     if (!audioContext) {
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         audioContext = new AudioContext();
+
+        // Create master gain node for volume control
+        masterGainNode = audioContext.createGain();
+        masterGainNode.gain.value = currentVolume;
+        masterGainNode.connect(audioContext.destination);
     }
 
     // Resume context if suspended (browser autoplay policy)
@@ -56,9 +63,9 @@ function playSelcalTone(freq1, freq2, duration) {
             osc1.connect(gain1);
             osc2.connect(gain2);
 
-            // Connect gain nodes to destination
-            gain1.connect(ctx.destination);
-            gain2.connect(ctx.destination);
+            // Connect gain nodes to master gain (volume control)
+            gain1.connect(masterGainNode);
+            gain2.connect(masterGainNode);
 
             // Start oscillators
             osc1.start(now);
@@ -95,7 +102,7 @@ function playSingleTone(frequency, duration = 500) {
             gain.gain.linearRampToValueAtTime(0, now + duration / 1000);
 
             osc.connect(gain);
-            gain.connect(ctx.destination);
+            gain.connect(masterGainNode);
 
             osc.start(now);
             osc.stop(now + duration / 1000 + 0.1);
@@ -185,6 +192,24 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+// Set volume level (0.0 to 1.0)
+function setVolume(level) {
+    // Clamp volume between 0 and 1
+    currentVolume = Math.max(0, Math.min(1, level));
+
+    // Update master gain if audio context exists
+    if (audioContext && masterGainNode) {
+        masterGainNode.gain.setValueAtTime(currentVolume, audioContext.currentTime);
+    }
+
+    return currentVolume;
+}
+
+// Get current volume level
+function getVolume() {
+    return currentVolume;
+}
+
 // Export functions for use in selcal.js
 window.playSelcalTone = playSelcalTone;
 window.playSingleTone = playSingleTone;
@@ -193,3 +218,5 @@ window.getAvailableTones = getAvailableTones;
 window.validateSelcalCode = validateSelcalCode;
 window.formatSelcalCode = formatSelcalCode;
 window.testAllTones = testAllTones;
+window.setVolume = setVolume;
+window.getVolume = getVolume;
