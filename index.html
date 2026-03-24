@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SELCAL Emulator | Airbus A320</title>
+    <link rel="stylesheet" href="css/cockpit.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <div class="cockpit-container">
+        <!-- Header Display -->
+        <div class="display-panel top-display">
+            <div class="panel-label">SELCAL SYSTEM</div>
+            <div class="system-status">ON LINE</div>
+        </div>
+
+        <!-- Main SELCAL Code Display -->
+        <div class="selcal-display">
+            <div class="code-digit active" id="digit1">-</div>
+            <div class="code-digit active" id="digit2">-</div>
+            <div class="separator">-</div>
+            <div class="code-digit active" id="digit3">-</div>
+            <div class="code-digit active" id="digit4">-</div>
+        </div>
+
+        <!-- Selected Tones Display -->
+        <div class="tones-display">
+            <div class="tone-pair">
+                <div class="tone-label">TONE 1</div>
+                <div class="tone-value" id="tone1">-- Hz</div>
+            </div>
+            <div class="tone-pair">
+                <div class="tone-label">TONE 2</div>
+                <div class="tone-value" id="tone2">-- Hz</div>
+            </div>
+            <div class="tone-pair">
+                <div class="tone-label">TONE 3</div>
+                <div class="tone-value" id="tone3">-- Hz</div>
+            </div>
+            <div class="tone-pair">
+                <div class="tone-label">TONE 4</div>
+                <div class="tone-value" id="tone4">-- Hz</div>
+            </div>
+        </div>
+
+        <!-- Letter Selection Keypad -->
+        <div class="keypad-container">
+            <div class="keypad-label">SELECT LETTERS</div>
+            <div class="keypad">
+                <button class="keypad-btn" data-letter="A">A</button>
+                <button class="keypad-btn" data-letter="B">B</button>
+                <button class="keypad-btn" data-letter="C">C</button>
+                <button class="keypad-btn" data-letter="D">D</button>
+                <button class="keypad-btn" data-letter="E">E</button>
+                <button class="keypad-btn" data-letter="F">F</button>
+                <button class="keypad-btn" data-letter="G">G</button>
+                <button class="keypad-btn" data-letter="H">H</button>
+                <button class="keypad-btn" data-letter="J">J</button>
+                <button class="keypad-btn" data-letter="K">K</button>
+                <button class="keypad-btn" data-letter="L">L</button>
+                <button class="keypad-btn" data-letter="M">M</button>
+                <button class="keypad-btn" data-letter="P">P</button>
+                <button class="keypad-btn" data-letter="Q">Q</button>
+                <button class="keypad-btn" data-letter="R">R</button>
+                <button class="keypad-btn" data-letter="S">S</button>
+            </div>
+        </div>
+
+        <!-- Control Buttons -->
+        <div class="control-panel">
+            <button class="control-btn clear-btn" id="clearBtn">CLEAR</button>
+            <button class="control-btn test-btn" id="testBtn" disabled>TEST SELCAL</button>
+        </div>
+
+        <!-- Status Messages -->
+        <div class="status-panel">
+            <div class="status-label">STATUS</div>
+            <div class="status-message" id="statusMessage">SELECT SELCAL CODE</div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-panel">
+            <div class="footer-info">AIRBUS A320 | SELCAL EMULATOR</div>
+            <div class="footer-version">V1.0.0</div>
+        </div>
+    </div>
+
+    <script src="js/selcal.js"></script>
+    <script src="js/audio.js"></script>
+</body>
+</html>
